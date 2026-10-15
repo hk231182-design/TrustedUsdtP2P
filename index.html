@@ -1,326 +1,511 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>P2P Market — USDT Trading</title>
+<meta name="theme-color" content="#080b12">
+<title>P2PMARKET | Premium USDT P2P</title>
+
 <style>
 :root {
-  --bg:#0b1020; --panel:#121a2d; --panel2:#182238;
-  --border:#29354c; --text:#f4f7ff; --muted:#96a4bd;
-  --green:#34d399; --red:#fb7185; --blue:#7c9cff;
+  --bg: #080b12;
+  --panel: #111827;
+  --lime: #b8f36b;
+  --muted: #9ba9bd;
+  --border: rgba(184,243,107,.17);
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,Helvetica,sans-serif}
-button,input,select{font:inherit}
-button{cursor:pointer}
-header{display:flex;align-items:center;justify-content:space-between;
-  padding:18px 5%;border-bottom:1px solid var(--border);gap:15px}
-.brand{font-size:22px;font-weight:800}
-.brand span{color:var(--green)}
-.status{font-size:12px;color:var(--green)}
-nav{display:flex;gap:8px;flex-wrap:wrap}
-nav button,.outline,.tab{background:transparent;color:var(--muted);
-  border:1px solid var(--border);padding:10px 14px;border-radius:9px}
-nav button.active,.tab.active{background:var(--panel2);color:white;
-  border-color:var(--blue)}
-main{max-width:1150px;margin:28px auto;padding:0 18px}
-h1{font-size:30px;margin:0 0 10px}
-p{color:var(--muted);line-height:1.55}
-.panel{background:var(--panel);border:1px solid var(--border);
-  border-radius:15px;padding:20px;margin-top:18px}
-.row{display:flex;align-items:center;justify-content:space-between;
-  gap:14px;flex-wrap:wrap}
-.market-select{background:var(--panel2);color:white;
-  border:1px solid var(--border);border-radius:9px;padding:12px}
-.tabs{display:flex;gap:8px;margin:20px 0}
-.tab{flex:1}
-.tab.active.buy{color:var(--green);border-color:var(--green)}
-.tab.active.sell{color:var(--red);border-color:var(--red)}
-label{display:block;color:var(--muted);font-size:13px;margin:15px 0 7px}
-input,select.field{width:100%;padding:13px;background:#0b1222;
-  border:1px solid var(--border);border-radius:9px;color:white}
-.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
-.btn{width:100%;border:0;border-radius:9px;padding:14px;
-  background:var(--green);color:#062019;font-weight:800;margin-top:18px}
-.btn.sell{background:var(--red);color:#300711}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
-  margin-top:20px}
-.stat{padding:15px;background:var(--panel2);border-radius:10px}
-.stat small{display:block;color:var(--muted);margin-bottom:8px}
-.stat strong{font-size:17px}
-.fee-line{display:flex;justify-content:space-between;gap:12px;
-  padding:11px 0;border-bottom:1px solid var(--border)}
-.fee-line:last-child{border-bottom:0}
-.green{color:var(--green)}.red{color:var(--red)}
-.notice{border:1px solid #6c5525;background:#241e13;color:#f4d38a;
-  padding:13px;border-radius:9px;font-size:13px;line-height:1.5}
-.muted{color:var(--muted)}
-.offer{padding:16px 0;border-bottom:1px solid var(--border)}
-.offer:last-child{border-bottom:0}
-.offer button{background:var(--panel2);border:1px solid var(--border);
-  color:white;padding:9px 12px;border-radius:8px}
-.hidden{display:none!important}
-footer{text-align:center;padding:30px 15px;color:var(--muted);
-  font-size:12px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-  background:#26334a;color:white;padding:13px 18px;border-radius:10px;
-  max-width:90%;display:none;z-index:10}
-@media(max-width:720px){
- .grid{grid-template-columns:1fr}
- .stat-grid{grid-template-columns:1fr}
- header{align-items:flex-start;flex-direction:column}
- h1{font-size:25px}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: #f1f5f9;
+  background:
+    radial-gradient(ellipse at 15% 10%, #172719 0%, transparent 36%),
+    radial-gradient(ellipse at 90% 40%, #101d32 0%, transparent 35%),
+    var(--bg);
+  font-family: Inter, Arial, sans-serif;
+  overflow-x: hidden;
+}
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 4px;
+}
+
+/* Navigation */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 17px 6%;
+  background: rgba(8,11,18,.82);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.logo { font-size: 23px; font-weight: 900; letter-spacing: -.8px; }
+.logo span { color: var(--lime); }
+nav { display: flex; align-items: center; gap: 26px; }
+nav a { color: #aeb9ca; font-size: 13px; transition: color .2s; }
+nav a:hover { color: var(--lime); }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+
+/* 3D buttons */
+.btn {
+  position: relative;
+  overflow: hidden;
+  padding: 12px 17px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  font-weight: 800;
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+.btn:hover { transform: translateY(-3px); }
+.btn:active { transform: translateY(1px) scale(.98); }
+.primary {
+  color: #101708;
+  background: linear-gradient(135deg, #d8ff9c, #a9ed55);
+  box-shadow: 0 5px 0 #638f30, 0 10px 28px rgba(184,243,107,.16);
+}
+.primary:hover { box-shadow: 0 5px 0 #638f30, 0 15px 34px rgba(184,243,107,.27); }
+.secondary {
+  color: #f4f7fb;
+  background: linear-gradient(145deg, #202d42, #121b2a);
+  border-color: #34435b;
+  box-shadow: 0 4px 0 #080d17, 0 10px 22px #0003;
+}
+
+/* Hero */
+main { width: min(1160px, 90%); margin: auto; }
+.hero {
+  min-height: 620px;
+  display: grid;
+  grid-template-columns: 1fr .92fr;
+  gap: 55px;
+  align-items: center;
+  padding: 65px 0 55px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: #b8f36b0b;
+  color: var(--lime);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+}
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 12px var(--lime);
+}
+h1 {
+  margin: 23px 0 18px;
+  font-size: clamp(43px, 5.4vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -3px;
+}
+h1 span {
+  color: var(--lime);
+  text-shadow: 0 0 32px #b8f36b22;
+}
+.hero-copy { max-width: 490px; color: var(--muted); line-height: 1.85; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 27px; }
+.trust-row { display: flex; flex-wrap: wrap; gap: 19px; margin-top: 30px; color: #b8c4d7; font-size: 12px; }
+.trust-row span::before { content: "✓"; color: var(--lime); margin-right: 7px; font-weight: bold; }
+
+/* Floating coin decoration */
+.visual {
+  position: relative;
+  min-width: 0;
+  perspective: 1000px;
+}
+.orb {
+  position: absolute;
+  width: 230px; height: 230px;
+  top: -65px; right: -35px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #dfffad, #85c73e 35%, #31551b 72%, #14230d);
+  box-shadow: inset -18px -20px 35px #0007, inset 9px 10px 25px #fff4, 0 0 70px #b8f36b20;
+  opacity: .20;
+  transform: rotate(-18deg);
+  pointer-events: none;
+}
+.trading-card {
+  position: relative;
+  z-index: 1;
+  padding: 25px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(145deg, rgba(30,42,59,.95), rgba(12,18,29,.97));
+  box-shadow: 0 35px 85px #0008, inset 1px 1px 0 #ffffff14;
+  transform: rotateY(-4deg) rotateX(2deg);
+  transition: transform .4s, box-shadow .4s;
+}
+.trading-card:hover {
+  transform: rotateY(0) rotateX(0) translateY(-5px);
+  box-shadow: 0 42px 95px #0009, 0 0 35px #b8f36b0b;
+}
+.card-heading { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.card-heading h2 { margin: 0; font-size: 21px; }
+.live-badge {
+  color: var(--lime); background: #b8f36b12; border: 1px solid #b8f36b33;
+  border-radius: 20px; padding: 7px 10px; font-size: 10px; font-weight: bold;
+}
+.subtext { color: var(--muted); font-size: 13px; line-height: 1.6; }
+label { display: block; margin: 18px 0 8px; color: #c2ccda; font-size: 12px; font-weight: 700; }
+select, input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 11px;
+  color: #f5f7fb;
+  background: #090f1a;
+  border: 1px solid #34435b;
+  outline: none;
+}
+select option { background: #090f1a; }
+select:focus, input:focus { border-color: var(--lime); box-shadow: 0 0 0 3px #b8f36b12; }
+.switch { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 20px; }
+.switch .btn { padding: 14px 10px; }
+.switch .selected {
+  background: linear-gradient(135deg, #d8ff9c, #a9ed55);
+  color: #11180b;
+  box-shadow: 0 4px 0 #638f30, 0 8px 22px #b8f36b1e;
+  border-color: transparent;
+}
+.amount-wrap { position: relative; }
+.amount-wrap input { padding-right: 75px; }
+.currency-mark { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--lime); font-weight: 800; }
+.notice {
+  margin-top: 15px; padding: 12px 13px;
+  color: #ffe5a3; background: #332a133e;
+  border: 1px solid #ffe5a322; border-radius: 10px;
+  font-size: 11px; line-height: 1.65;
+}
+.fees { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 17px; }
+.fee {
+  padding: 14px; border-radius: 13px;
+  background: linear-gradient(145deg, #0e1725, #0a101b);
+  border: 1px solid #28364a;
+  box-shadow: inset 0 1px 0 #ffffff07;
+}
+.fee small { color: var(--muted); }
+.fee strong { display: block; margin-top: 7px; font-size: 19px; }
+.fee strong span { font-size: 11px; color: var(--muted); font-weight: 500; }
+.full { width: 100%; margin-top: 17px; padding: 15px; }
+.status { min-height: 20px; margin-bottom: 0; font-size: 12px; overflow-wrap: anywhere; }
+
+/* Market ticker */
+.market-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 12px 0 70px;
+}
+.market-tile {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px; border-radius: 15px;
+  background: linear-gradient(145deg, #141e2d, #0d1420);
+  border: 1px solid #ffffff0d;
+  box-shadow: 0 12px 25px #0003, inset 0 1px 0 #ffffff08;
+  transition: transform .25s, border-color .25s;
+}
+.market-tile:hover { transform: translateY(-5px); border-color: var(--border); }
+.flag {
+  width: 43px; height: 43px; display: grid; place-items: center;
+  border-radius: 13px; background: #ffffff08; font-size: 23px;
+}
+.market-tile strong { display: block; font-size: 14px; }
+.market-tile small { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; }
+
+/* Features */
+.section-title { text-align: center; margin: 0 auto 30px; }
+.section-title h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 10px; }
+.section-title h2 span { color: var(--lime); }
+.section-title p { color: var(--muted); font-size: 14px; }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; margin-bottom: 80px; }
+.feature {
+  position: relative; overflow: hidden;
+  padding: 25px; min-height: 190px;
+  border-radius: 17px;
+  background: linear-gradient(145deg, #151f2e, #0c121e);
+  border: 1px solid #ffffff0e;
+  box-shadow: 0 18px 35px #0003, inset 0 1px 0 #ffffff09;
+  transition: transform .3s, border-color .3s;
+}
+.feature:hover { transform: translateY(-7px) rotateX(2deg); border-color: #b8f36b44; }
+.feature-icon {
+  display: grid; place-items: center; width: 47px; height: 47px;
+  border-radius: 14px; color: var(--lime); font-size: 22px;
+  background: linear-gradient(145deg, #b8f36b20, #b8f36b05);
+  border: 1px solid #b8f36b22;
+  box-shadow: 0 8px 20px #0004;
+}
+.feature h3 { margin: 19px 0 9px; font-size: 16px; }
+.feature p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+footer { border-top: 1px solid #ffffff0d; padding: 28px 6%; text-align: center; color: #8290a5; font-size: 11px; line-height: 1.8; }
+.footer-logo { color: #f1f5f9; font-weight: 900; font-size: 15px; margin-bottom: 7px; }
+.footer-logo span { color: var(--lime); }
+
+@media (max-width: 850px) {
+  nav { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 45px; padding-top: 48px; }
+  .hero-copy { max-width: 600px; }
+  .visual { max-width: 560px; width: 100%; margin: auto; }
+  .market-strip { margin-bottom: 55px; }
+}
+@media (max-width: 600px) {
+  header { padding: 15px 5%; }
+  .logo { font-size: 19px; }
+  .nav-actions { gap: 7px; }
+  .nav-actions .btn { padding: 10px 12px; font-size: 12px; }
+  main { width: 90%; }
+  .hero { padding: 40px 0; }
+  h1 { letter-spacing: -2px; font-size: clamp(42px, 12vw, 58px); }
+  .trading-card { padding: 19px; transform: none; }
+  .orb { width: 150px; height: 150px; right: -10px; }
+  .market-strip { grid-template-columns: 1fr; gap: 10px; }
+  .market-tile { padding: 14px; }
+  .features { grid-template-columns: 1fr; margin-bottom: 50px; }
+  .feature { min-height: auto; }
+  .fees { gap: 8px; }
+  .fee { padding: 12px; }
+  .fee strong { font-size: 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
 </style>
 </head>
+
 <body>
 <header>
-  <div>
-    <div class="brand">P2P<span>MARKET</span></div>
-    <div class="status">● Secure trading platform — setup mode</div>
-  </div>
-  <nav>
-    <button class="active" data-page="market">Market</button>
-    <button data-page="orders">Orders</button>
-    <button data-page="wallet">Wallet</button>
-    <button data-page="account">Account</button>
+  <a class="logo" href="#" aria-label="P2P Market home">P2P<span>MARKET</span></a>
+  <nav aria-label="Main navigation">
+    <a href="#market">Trade</a>
+    <a href="#markets">Markets</a>
+    <a href="#security">Security</a>
   </nav>
+  <div class="nav-actions">
+    <button class="btn secondary" type="button" onclick="showLogin()">Log in</button>
+    <button class="btn primary" type="button" onclick="showLogin()">Get started</button>
+  </div>
 </header>
 
 <main>
-<section id="page-market">
-  <div class="row">
+  <section class="hero">
     <div>
-      <h1>P2P USDT Market</h1>
-      <p>Explore the market and calculate your trade before confirmation.</p>
-    </div>
-    <select id="market" class="market-select" aria-label="Select market">
-      <option value="IN">India · INR</option>
-      <option value="BD">Bangladesh · BDT</option>
-      <option value="PK">Pakistan · PKR</option>
-    </select>
-  </div>
-
-  <div class="stat-grid">
-    <div class="stat"><small>Selected market</small><strong id="marketName">India</strong></div>
-    <div class="stat"><small>Trading pair</small><strong>USDT / <span id="currency1">INR</span></strong></div>
-    <div class="stat"><small>Platform status</small><strong class="green">Setup mode</strong></div>
-  </div>
-
-  <div class="grid">
-    <div class="panel">
-      <div class="tabs">
-        <button id="buyTab" class="tab active buy">Buy USDT</button>
-        <button id="sellTab" class="tab">Sell USDT</button>
-      </div>
-
-      <label for="amount" id="amountLabel">You pay (INR)</label>
-      <input id="amount" type="number" min="0" step="any"
-        placeholder="Enter fiat amount" value="10000">
-
-      <label for="rate">Indicative rate (per USDT)</label>
-      <input id="rate" type="number" min="0" step="any" value="90">
-
-      <label for="method">Payment method</label>
-      <select id="method" class="field">
-        <option>Bank transfer</option>
-        <option>Instant bank payment</option>
-        <option>Other supported method (configure later)</option>
-      </select>
-
-      <div class="notice" style="margin-top:16px">
-        Demo calculator only. No live offers or payment methods have been
-        verified. Do not send money based on this page.
-      </div>
-      <button class="btn" id="tradeBtn">Preview calculation</button>
-    </div>
-
-    <div class="panel">
-      <h3>Trade breakdown</h3>
-      <p>Illustrative calculation — not a live quote.</p>
-      <div class="fee-line"><span id="grossLabel">Fiat amount</span><strong id="gross">—</strong></div>
-      <div class="fee-line"><span>Estimated USDT</span><strong id="usdt">—</strong></div>
-      <div class="fee-line"><span>Buyer fee</span><strong id="buyerFee">2.37 USDT</strong></div>
-      <div class="fee-line"><span>Seller fee</span><strong id="sellerFee">2.63 USDT</strong></div>
-      <div class="fee-line"><span id="netLabel">Estimated received</span><strong id="net" class="green">—</strong></div>
-      <p class="muted" style="font-size:12px">
-        Fees are displayed separately. Final fee treatment and rounding must
-        be confirmed in the trading rules before launch.
+      <div class="tag"><span class="dot"></span> PEER-TO-PEER MARKETPLACE</div>
+      <h1>Trade USDT.<br><span>Stay in control.</span></h1>
+      <p class="hero-copy">
+        A simpler way to explore local-currency USDT markets.
+        Choose your country, payment method and trading direction
+        from one clean marketplace.
       </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#market">Explore markets&nbsp; ↘</a>
+        <a class="btn secondary" href="#security">Explore security&nbsp; ↗</a>
+      </div>
+      <div class="trust-row">
+        <span>Clear fee display</span>
+        <span>Local payment choices</span>
+        <span>Security-first design</span>
+      </div>
     </div>
-  </div>
 
-  <div class="panel">
-    <div class="row">
-      <div><h3>Available offers</h3><p>Offers will appear here after verified backend integration.</p></div>
-      <select id="offerFilter" class="market-select">
-        <option value="all">All payment methods</option>
-        <option value="bank">Bank transfer</option>
-      </select>
-    </div>
-    <div id="offers" class="offer">
-      <p>No verified live offers yet.</p>
-      <span class="muted">Demo mode does not connect to real traders.</span>
-    </div>
-  </div>
-</section>
+    <div class="visual">
+      <div class="orb" aria-hidden="true"></div>
+      <div class="trading-card" id="market">
+        <div class="card-heading">
+          <h2>Find a trade</h2>
+          <span class="live-badge">DEMO PREVIEW</span>
+        </div>
+        <p class="subtext">Set up your search in a few simple steps.</p>
 
-<section id="page-orders" class="hidden">
-  <div class="panel">
-    <h1>Orders</h1>
-    <p>Your real order history will be available after account and backend setup.</p>
-    <div class="notice">No real orders can be created in setup mode.</div>
-  </div>
-</section>
+        <label for="country">Country market</label>
+        <select id="country" onchange="updateMarket()">
+          <option value="IN">🇮🇳 &nbsp; India — INR (₹)</option>
+          <option value="BD">🇧🇩 &nbsp; Bangladesh — BDT (৳)</option>
+          <option value="PK">🇵🇰 &nbsp; Pakistan — PKR (Rs)</option>
+        </select>
 
-<section id="page-wallet" class="hidden">
-  <div class="panel">
-    <h1>Wallet</h1>
-    <p>Real balances must come from a secure transaction ledger or a properly integrated wallet service.</p>
-    <div class="stat-grid">
-      <div class="stat"><small>USDT balance</small><strong>Unavailable</strong></div>
-      <div class="stat"><small>Deposits</small><strong>Not enabled</strong></div>
-      <div class="stat"><small>Withdrawals</small><strong>Not enabled</strong></div>
-    </div>
-    <button class="btn" id="depositBtn" disabled>Deposit unavailable</button>
-    <button class="btn" id="withdrawBtn" disabled>Withdrawal unavailable</button>
-  </div>
-</section>
+        <div class="switch" role="group" aria-label="Trade direction">
+          <button id="buyBtn" class="btn selected" type="button" aria-pressed="true" onclick="setSide('buy')">Buy USDT</button>
+          <button id="sellBtn" class="btn secondary" type="button" aria-pressed="false" onclick="setSide('sell')">Sell USDT</button>
+        </div>
 
-<section id="page-account" class="hidden">
-  <div class="panel">
-    <h1>Account</h1>
-    <p>Account creation and login will be connected to secure server-side authentication.</p>
-    <div class="notice">
-      Authentication is not implemented yet. This page does not store passwords
-      or pretend that a user is logged in.
+        <label for="payment">Payment method</label>
+        <select id="payment"></select>
+
+        <label for="amount" id="amountLabel">Amount to spend (INR)</label>
+        <div class="amount-wrap">
+          <input id="amount" type="number" min="1" step="any" inputmode="decimal" placeholder="Enter fiat amount">
+          <span class="currency-mark" id="currencyMark">INR</span>
+        </div>
+
+        <div class="notice" id="marketNotice" role="status">
+          India market selected. This is a frontend demo; live trading is not enabled.
+        </div>
+
+        <div class="fees">
+          <div class="fee">
+            <small>Example seller fee</small>
+            <strong>2.63 <span>USDT</span></strong>
+          </div>
+          <div class="fee">
+            <small>Example buyer fee</small>
+            <strong>2.37 <span>USDT</span></strong>
+          </div>
+        </div>
+
+        <p class="subtext" style="font-size:10px;margin-bottom:0">
+          Example values only. No live price, fee calculation or order is connected.
+        </p>
+        <button class="btn primary full" type="button" onclick="showOffers()">Browse offers&nbsp; →</button>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </div>
     </div>
-    <button class="btn" id="accountBtn">View activation requirements</button>
-  </div>
-</section>
+  </section>
+
+  <section id="markets" aria-label="Supported markets">
+    <div class="market-strip">
+      <div class="market-tile">
+        <div class="flag">🇮🇳</div>
+        <div><strong>India</strong><small>INR · UPI · IMPS · NEFT</small></div>
+      </div>
+      <div class="market-tile">
+        <div class="flag">🇧🇩</div>
+        <div><strong>Bangladesh</strong><small>BDT · bKash · Nagad · Rocket</small></div>
+      </div>
+      <div class="market-tile">
+        <div class="flag">🇵🇰</div>
+        <div><strong>Pakistan</strong><small>PKR · JazzCash · Easypaisa · Raast</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="security">
+    <div class="section-title">
+      <h2>Built around <span>trust.</span></h2>
+      <p>A marketplace design that puts clarity and security first.</p>
+    </div>
+    <div class="features">
+      <article class="feature">
+        <div class="feature-icon">◇</div>
+        <h3>Secure accounts</h3>
+        <p>Account protection and access controls will require secure backend services.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">↗</div>
+        <h3>Payment verification</h3>
+        <p>Payments must be independently verified before a transaction can be settled.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">⬡</div>
+        <h3>Protected settlement</h3>
+        <p>Escrow, disputes, compliance and transaction reconciliation must be implemented securely.</p>
+      </article>
+    </div>
+  </section>
 </main>
 
 <footer>
-  P2P Market · Setup mode · No real trading, custody or payment processing enabled.
+  <div class="footer-logo">P2P<span>MARKET</span></div>
+  © 2026 P2P Market · Frontend preview only.<br>
+  No real USDT offers, payments, escrow or transactions are currently enabled.
 </footer>
-<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const $ = id => document.getElementById(id);
-
 const markets = {
-  IN: {name:"India", currency:"INR", exampleRate:90},
-  BD: {name:"Bangladesh", currency:"BDT", exampleRate:120},
-  PK: {name:"Pakistan", currency:"PKR", exampleRate:280}
+  IN: {
+    name: "India", currency: "INR", symbol: "₹",
+    payments: ["UPI", "IMPS", "NEFT", "Bank Transfer"]
+  },
+  BD: {
+    name: "Bangladesh", currency: "BDT", symbol: "৳",
+    payments: ["bKash", "Nagad", "Rocket", "Bank Transfer"]
+  },
+  PK: {
+    name: "Pakistan", currency: "PKR", symbol: "Rs",
+    payments: ["JazzCash", "Easypaisa", "Raast", "Bank Transfer"]
+  }
 };
 
 let side = "buy";
 
-function toast(message) {
-  const el = $("toast");
-  el.textContent = message;
-  el.style.display = "block";
-  clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => { el.style.display = "none"; }, 3500);
-}
-
-function currentMarket() {
-  return markets[$("market").value];
-}
-
-function money(value, currency) {
-  if (!Number.isFinite(value)) return "—";
-  return new Intl.NumberFormat("en", {
-    style:"currency", currency, maximumFractionDigits:2
-  }).format(value);
-}
-
 function updateMarket() {
-  const market = currentMarket();
-  $("marketName").textContent = market.name;
-  $("currency1").textContent = market.currency;
-  $("amountLabel").textContent =
-    side === "buy" ? "You pay (" + market.currency + ")" : "You receive (" + market.currency + ")";
-  $("grossLabel").textContent =
-    side === "buy" ? "Fiat amount paid" : "Fiat amount before fee";
-  $("netLabel").textContent =
-    side === "buy" ? "Estimated USDT received" : "Estimated USDT cost";
-  $("rate").value = market.exampleRate;
-  calculate();
+  const code = document.getElementById("country").value;
+  const market = markets[code];
+  const paymentSelect = document.getElementById("payment");
+  const previous = paymentSelect.value;
+
+  paymentSelect.replaceChildren();
+  market.payments.forEach(method => {
+    const option = document.createElement("option");
+    option.value = method;
+    option.textContent = method;
+    paymentSelect.appendChild(option);
+  });
+  if (market.payments.includes(previous)) paymentSelect.value = previous;
+
+  document.getElementById("currencyMark").textContent = market.currency;
+  document.getElementById("amountLabel").textContent =
+    (side === "buy" ? "Amount to spend (" : "Amount to receive (") +
+    market.currency + ")";
+  document.getElementById("marketNotice").textContent =
+    market.name + " selected. Frontend demo only — live trading is not enabled.";
+  document.getElementById("status").textContent = "";
 }
 
 function setSide(nextSide) {
   side = nextSide;
-  $("buyTab").classList.toggle("active", side === "buy");
-  $("buyTab").classList.toggle("buy", side === "buy");
-  $("sellTab").classList.toggle("active", side === "sell");
-  $("sellTab").classList.toggle("sell", side === "sell");
-  $("tradeBtn").className = "btn" + (side === "sell" ? " sell" : "");
+  const isBuy = side === "buy";
+  const buy = document.getElementById("buyBtn");
+  const sell = document.getElementById("sellBtn");
+
+  buy.className = isBuy ? "btn selected" : "btn secondary";
+  sell.className = isBuy ? "btn secondary" : "btn selected";
+  buy.setAttribute("aria-pressed", String(isBuy));
+  sell.setAttribute("aria-pressed", String(!isBuy));
   updateMarket();
 }
 
-function calculate() {
-  const amount = Number($("amount").value);
-  const rate = Number($("rate").value);
-  const currency = currentMarket().currency;
+function showOffers() {
+  const amountField = document.getElementById("amount");
+  const amount = Number(amountField.value);
+  const market = markets[document.getElementById("country").value];
+  const payment = document.getElementById("payment").value;
+  const status = document.getElementById("status");
 
-  if (!Number.isFinite(amount) || amount <= 0 ||
-      !Number.isFinite(rate) || rate <= 0) {
-    $("gross").textContent = "—";
-    $("usdt").textContent = "—";
-    $("net").textContent = "—";
+  if (!amountField.value || !Number.isFinite(amount) || amount <= 0) {
+    status.textContent = "Please enter an amount greater than zero.";
+    amountField.focus();
     return;
   }
 
-  const grossUSDT = amount / rate;
-  const buyerFee = 2.37;
-  const sellerFee = 2.63;
-
-  $("gross").textContent = money(amount, currency);
-  $("usdt").textContent = grossUSDT.toFixed(4) + " USDT";
-  $("buyerFee").textContent = buyerFee.toFixed(2) + " USDT";
-  $("sellerFee").textContent = sellerFee.toFixed(2) + " USDT";
-
-  if (side === "buy") {
-    $("net").textContent = Math.max(0, grossUSDT - buyerFee).toFixed(4) + " USDT";
-  } else {
-    $("net").textContent = Math.max(0, grossUSDT - sellerFee).toFixed(4) + " USDT";
-  }
+  status.textContent =
+    "Demo: " + side.toUpperCase() + " USDT · " + market.currency + " " +
+    amount.toLocaleString(undefined, { maximumFractionDigits: 2 }) +
+    " · " + payment + ". No live offers or orders were created.";
 }
 
-$("market").addEventListener("change", updateMarket);
-$("amount").addEventListener("input", calculate);
-$("rate").addEventListener("input", calculate);
-$("buyTab").addEventListener("click", () => setSide("buy"));
-$("sellTab").addEventListener("click", () => setSide("sell"));
-
-$("tradeBtn").addEventListener("click", () => {
-  calculate();
-  toast("Preview only. Real order creation is disabled until the secure backend is connected.");
-});
-
-$("accountBtn").addEventListener("click", () => {
-  toast("Next: secure authentication, database, server-side validation and access controls.");
-});
-
-$("offerFilter").addEventListener("change", () => {
-  toast("Live offer filtering will work when verified offers are connected to the backend.");
-});
-
-document.querySelectorAll("nav button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-
-    document.querySelectorAll("main > section").forEach(section => section.classList.add("hidden"));
-    $("page-" + button.dataset.page).classList.remove("hidden");
+function showLogin() {
+  document.getElementById("status").textContent =
+    "Login is a frontend preview. Account registration will be added later.";
+  document.getElementById("market").scrollIntoView({
+    behavior: "smooth", block: "center"
   });
-});
+}
 
 updateMarket();
 </script>
